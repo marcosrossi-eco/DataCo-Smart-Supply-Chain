@@ -1,0 +1,373 @@
+[
+  {
+    "column_name": "Type",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 4
+  },
+  {
+    "column_name": "Days for shipping (real)",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 7
+  },
+  {
+    "column_name": "Days for shipment (scheduled)",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 4
+  },
+  {
+    "column_name": "Benefit per order",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 21998
+  },
+  {
+    "column_name": "Sales per customer",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 2927
+  },
+  {
+    "column_name": "Delivery Status",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 4
+  },
+  {
+    "column_name": "Late_delivery_risk",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 2
+  },
+  {
+    "column_name": "Category Id",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 51
+  },
+  {
+    "column_name": "Category Name",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 50
+  },
+  {
+    "column_name": "Customer City",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 563
+  },
+  {
+    "column_name": "Customer Country",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 2
+  },
+  {
+    "column_name": "Customer Email",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 1
+  },
+  {
+    "column_name": "Customer Fname",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 782
+  },
+  {
+    "column_name": "Customer Id",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 20652
+  },
+  {
+    "column_name": "Customer Lname",
+    "dtype_pandas": "str",
+    "null_count": 8,
+    "null_pct": 0.0,
+    "unique_count": 1109
+  },
+  {
+    "column_name": "Customer Password",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 1
+  },
+  {
+    "column_name": "Customer Segment",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 3
+  },
+  {
+    "column_name": "Customer State",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 46
+  },
+  {
+    "column_name": "Customer Street",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 7458
+  },
+  {
+    "column_name": "Customer Zipcode",
+    "dtype_pandas": "float64",
+    "null_count": 3,
+    "null_pct": 0.0,
+    "unique_count": 995
+  },
+  {
+    "column_name": "Department Id",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 11
+  },
+  {
+    "column_name": "Department Name",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 11
+  },
+  {
+    "column_name": "Latitude",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 11250
+  },
+  {
+    "column_name": "Longitude",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 4487
+  },
+  {
+    "column_name": "Market",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 5
+  },
+  {
+    "column_name": "Order City",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 3597
+  },
+  {
+    "column_name": "Order Country",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 164
+  },
+  {
+    "column_name": "Order Customer Id",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 20652
+  },
+  {
+    "column_name": "order date (DateOrders)",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 65752
+  },
+  {
+    "column_name": "Order Id",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 65752
+  },
+  {
+    "column_name": "Order Item Cardprod Id",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 118
+  },
+  {
+    "column_name": "Order Item Discount",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 1017
+  },
+  {
+    "column_name": "Order Item Discount Rate",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 18
+  },
+  {
+    "column_name": "Order Item Id",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 180519
+  },
+  {
+    "column_name": "Order Item Product Price",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 75
+  },
+  {
+    "column_name": "Order Item Profit Ratio",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 162
+  },
+  {
+    "column_name": "Order Item Quantity",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 5
+  },
+  {
+    "column_name": "Sales",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 193
+  },
+  {
+    "column_name": "Order Item Total",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 2927
+  },
+  {
+    "column_name": "Order Profit Per Order",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 21998
+  },
+  {
+    "column_name": "Order Region",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 23
+  },
+  {
+    "column_name": "Order State",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 1089
+  },
+  {
+    "column_name": "Order Status",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 9
+  },
+  {
+    "column_name": "Order Zipcode",
+    "dtype_pandas": "float64",
+    "null_count": 155679,
+    "null_pct": 86.24,
+    "unique_count": 609
+  },
+  {
+    "column_name": "Product Card Id",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 118
+  },
+  {
+    "column_name": "Product Category Id",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 51
+  },
+  {
+    "column_name": "Product Description",
+    "dtype_pandas": "float64",
+    "null_count": 180519,
+    "null_pct": 100.0,
+    "unique_count": 0
+  },
+  {
+    "column_name": "Product Image",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 118
+  },
+  {
+    "column_name": "Product Name",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 118
+  },
+  {
+    "column_name": "Product Price",
+    "dtype_pandas": "float64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 75
+  },
+  {
+    "column_name": "Product Status",
+    "dtype_pandas": "int64",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 1
+  },
+  {
+    "column_name": "shipping date (DateOrders)",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 63701
+  },
+  {
+    "column_name": "Shipping Mode",
+    "dtype_pandas": "str",
+    "null_count": 0,
+    "null_pct": 0.0,
+    "unique_count": 4
+  }
+]
