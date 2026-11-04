@@ -1,0 +1,57 @@
+﻿# DataCo Smart Supply Chain
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Dados
+data/
+*.csv
+*.parquet
+*.delta
+_delta_log/
+spark-warehouse/
+metastore_db/
+derby.log
+
+# Jupyter
+.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+data/raw/*.csv
+data/bronze/
+data/silver/
+data/gold/
+logs/
