@@ -1,0 +1,74 @@
+<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>DataCo - Painel Executivo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#eef1f5;--card:#fff;--tx:#14202e;--mut:#5b6878;--bd:#dde3ea;--b:#2563eb;--g:#16a34a;--r:#dc2626;--o:#f59e0b;--hd:#0f2a4a;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d131b;--card:#16202c;--tx:#e9eef5;--mut:#9fb0c3;--bd:#263445;--b:#60a5fa;--g:#4ade80;--r:#f87171;--o:#fbbf24;--hd:#16202c;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d131b;--card:#16202c;--tx:#e9eef5;--mut:#9fb0c3;--bd:#263445;--b:#60a5fa;--g:#4ade80;--r:#f87171;--o:#fbbf24;--hd:#16202c;color-scheme:dark}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--tx);font:13px/1.35 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;display:flex;flex-direction:column;gap:10px;padding:12px 16px;min-width:1000px;min-height:600px}
+header{background:var(--hd);color:#fff;border-radius:10px;padding:10px 16px;display:flex;justify-content:space-between;align-items:baseline}
+header h1{font-size:19px;margin:0}header span{font-size:12px;opacity:.8}
+.k{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.k div{background:var(--card);border:1px solid var(--bd);border-left:4px solid var(--b);border-radius:8px;padding:8px 12px}
+.k b{display:block;font-size:22px;line-height:1.1}.k span{color:var(--mut);font-size:11.5px}
+.g{flex:1;min-height:0;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:10px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;min-height:0;min-width:0}
+.c h3{margin:0 0 2px;font-size:13px}.c p{margin:0 0 4px;color:var(--mut);font-size:11.5px}
+.w{position:relative;flex:1;min-height:0}
+footer{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+footer div{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:8px 12px;font-size:12.5px}
+footer b{color:var(--r)}
+</style></head><body>
+<header><h1>DataCo Smart Supply Chain | Painel Executivo de Logística</h1><span>180.519 itens | 65.752 pedidos | Fonte: camada Gold (Glue/Spark + Athena)</span></header>
+<div class="k" id="kp"></div>
+<div class="g">
+<div class="c"><h3>Atraso por modal de envio</h3><p id="t1"></p><div class="w"><canvas id="c1"></canvas></div></div>
+<div class="c"><h3>Vendas x lucro por mercado</h3><p>US$ milhões</p><div class="w"><canvas id="c2"></canvas></div></div>
+<div class="c"><h3>Vendas por mês</h3><p>US$ milhões</p><div class="w"><canvas id="c3"></canvas></div></div>
+<div class="c"><h3>Situação das entregas</h3><p>% dos itens</p><div class="w"><canvas id="c4"></canvas></div></div>
+<div class="c"><h3>Categorias com maior prejuízo</h3><p>US$ mil (itens com lucro negativo)</p><div class="w"><canvas id="c5"></canvas></div></div>
+<div class="c"><h3>Suspeita de fraude por região</h3><p>nº de itens com status SUSPECTED_FRAUD</p><div class="w"><canvas id="c6"></canvas></div></div>
+</div>
+<footer id="ft"></footer>
+<script>
+const D={"K": {"items": 180519, "orders": 65752, "sales": 36784735, "profit": 3966903, "late": 57.3, "fraud": 4062, "fraudpct": 2.25, "loss": 3883547, "avgdelay": 0.57}, "sm": {"Shipping Mode": ["First Class", "Same Day", "Second Class", "Standard Class"], "items": [27814, 9737, 35216, 107752], "sales": [5674370.0, 1942529.0, 7145445.0, 22022392.0], "profit": [643122.0, 203018.0, 750308.0, 2370454.0], "late": [100.0, 47.8, 79.7, 39.8], "fraud": [686, 219, 749, 2408], "loss": [575636.0, 207103.0, 775333.0, 2325476.0]}, "mk": {"Market": ["Africa", "Europe", "LATAM", "Pacific Asia", "USCA"], "items": [11614, 50252, 51594, 41260, 25799], "sales": [2294453.0, 10872397.0, 10277613.0, 8273744.0, 5066529.0], "profit": [252071.0, 1169443.0, 1123322.0, 857753.0, 564314.0], "late": [56.8, 57.7, 57.0, 57.3, 57.1], "fraud": [237, 1172, 1182, 869, 602], "loss": [235941.0, 1147236.0, 1078166.0, 893012.0, 529192.0]}, "cat": {"Category Name": ["Fishing", "Cleats", "Camping & Hiking", "Cardio Equipment", "Water Sports", "Women's Apparel", "Men's Footwear", "Indoor/Outdoor Games"], "items": [17325, 24551, 13729, 12487, 15540, 21035, 22246, 19298], "sales": [6929654.0, 4431943.0, 4118426.0, 3694843.0, 3113845.0, 3147800.0, 2891758.0, 2888994.0], "profit": [756221.0, 494637.0, 427456.0, 383011.0, 325147.0, 350421.0, 311903.0, 318451.0], "late": [57.3, 57.3, 56.9, 56.9, 57.2, 57.1, 56.9, 57.2], "fraud": [394, 560, 305, 276, 329, 481, 516, 439], "loss": [728571.0, 452594.0, 443082.0, 402647.0, 334570.0, 323773.0, 309270.0, 298637.0]}, "rg": {"Order Region": ["Western Europe", "Central America", "South America", "West of USA ", "Oceania", "Southern Europe", "Caribbean", "Southeast Asia"], "items": [27109, 28341, 14935, 7993, 10148, 9431, 8318, 9539], "sales": [5894381.0, 5665712.0, 2960881.0, 1571416.0, 2016654.0, 2047919.0, 1651019.0, 1932496.0], "profit": [625446.0, 616342.0, 335154.0, 164941.0, 201478.0, 230829.0, 171826.0, 211343.0], "late": [58.5, 57.2, 57.2, 56.6, 56.1, 56.7, 55.9, 58.0], "fraud": [705, 631, 361, 236, 229, 223, 190, 187], "loss": [629910.0, 595702.0, 302219.0, 171600.0, 226038.0, 205789.0, 180245.0, 201751.0]}, "mo": {"ym": ["2015-01", "2015-02", "2015-03", "2015-04", "2015-05", "2015-06", "2015-07", "2015-08", "2015-09", "2015-10", "2015-11", "2015-12", "2016-01", "2016-02", "2016-03", "2016-04", "2016-05", "2016-06", "2016-07", "2016-08", "2016-09", "2016-10", "2016-11", "2016-12", "2017-01", "2017-02", "2017-03", "2017-04", "2017-05", "2017-06", "2017-07", "2017-08", "2017-09", "2017-10", "2017-11", "2017-12", "2018-01"], "items": [5322, 4729, 5362, 5126, 5357, 5134, 5299, 5273, 5140, 5302, 5235, 5371, 5317, 4894, 5210, 5097, 5302, 5054, 5305, 5334, 5160, 5398, 5210, 5269, 5217, 4906, 5347, 5212, 5317, 4951, 5318, 5305, 5189, 2255, 2055, 2124, 2123], "sales": [1051590.0, 927010.0, 1051254.0, 1014463.0, 1050478.0, 1024006.0, 1038081.0, 1029495.0, 1018339.0, 1049154.0, 1029120.0, 1057841.0, 1046308.0, 968543.0, 1025853.0, 1001212.0, 1029400.0, 1003060.0, 1045716.0, 1048200.0, 1002397.0, 1048131.0, 1047590.0, 1037408.0, 1029698.0, 992535.0, 1048005.0, 1038322.0, 1105485.0, 1032086.0, 1104373.0, 1109337.0, 1143775.0, 1073994.0, 626914.0, 503911.0, 331650.0], "profit": [111661.0, 99141.0, 113778.0, 108084.0, 112148.0, 110147.0, 115624.0, 117980.0, 113468.0, 101758.0, 104427.0, 110642.0, 106781.0, 86809.0, 101260.0, 114977.0, 110716.0, 104196.0, 119942.0, 110730.0, 123385.0, 116782.0, 109539.0, 105003.0, 114844.0, 115111.0, 118689.0, 115961.0, 115015.0, 110399.0, 113027.0, 131501.0, 122462.0, 113447.0, 67791.0, 65838.0, 33842.0], "late": [55.9, 57.9, 57.2, 56.4, 58.1, 56.3, 57.6, 58.1, 58.9, 57.1, 56.4, 57.3, 57.9, 56.3, 57.8, 57.2, 58.0, 58.9, 55.2, 57.0, 56.8, 56.9, 56.9, 58.6, 56.0, 57.5, 57.8, 56.5, 56.8, 56.0, 58.3, 58.6, 57.3, 56.1, 57.8, 58.1, 58.7], "fraud": [124, 115, 120, 89, 136, 130, 102, 122, 122, 122, 100, 103, 107, 125, 113, 120, 115, 104, 179, 77, 89, 91, 130, 126, 109, 130, 94, 121, 157, 133, 135, 118, 119, 50, 48, 46, 41], "loss": [109861.0, 100965.0, 110773.0, 109847.0, 114227.0, 106383.0, 105318.0, 102324.0, 105391.0, 122039.0, 113702.0, 113151.0, 113229.0, 113705.0, 114460.0, 100869.0, 109933.0, 110421.0, 108888.0, 113178.0, 92134.0, 108434.0, 113586.0, 111548.0, 104745.0, 101169.0, 105440.0, 106610.0, 116658.0, 109997.0, 121177.0, 107131.0, 120600.0, 117129.0, 65993.0, 46609.0, 35923.0]}, "perf": {"Advance shipping": 41592.0, "Late delivery": 98977.0, "Shipping canceled": 7754.0, "Shipping on time": 32196.0}},K=D.K,N=n=>Number(n).toLocaleString('pt-BR');
+const S=getComputedStyle(document.documentElement),V=v=>S.getPropertyValue(v).trim();
+const tx=V('--tx'),mut=V('--mut'),bd=V('--bd'),B=V('--b'),G=V('--g'),R=V('--r'),O=V('--o');
+Chart.defaults.color=mut;Chart.defaults.font.size=11;Chart.defaults.maintainAspectRatio=false;Chart.defaults.animation=false;
+const lab={id:'lab',afterDatasetsDraw(ch,_,o){const x=ch.ctx;ch.data.datasets.forEach((ds,i)=>{if(ds.nolabel)return;ch.getDatasetMeta(i).data.forEach((el,j)=>{const v=ds.data[j],h=ch.options.indexAxis==='y';
+x.save();x.fillStyle=tx;x.font='600 11px system-ui';x.textBaseline='middle';x.textAlign=h?'left':'center';
+const t=(ds.fmt?ds.fmt(v):N(v));h?x.fillText(t,el.x+4,el.y):x.fillText(t,el.x,el.y-8);x.restore();});});}};
+const base=(h)=>({indexAxis:h?'y':'x',layout:{padding:{right:h?48:0,top:h?0:16}},plugins:{legend:{display:false}},scales:{x:{grid:{display:!h?false:true,color:bd},border:{display:false},ticks:{color:mut}},y:{grid:{display:h?false:true,color:bd},border:{display:false},ticks:{color:mut}}}});
+const el=id=>document.getElementById(id);
+el('kp').innerHTML=[['Vendas totais','US$ '+(K.sales/1e6).toFixed(1)+' mi'],['Lucro total','US$ '+(K.profit/1e6).toFixed(2)+' mi'],['Atraso (prazo real > agendado)',K.late.toFixed(1)+'%'],['Atraso médio','+'+K.avgdelay.toFixed(2)+' dia'],['Suspeita de fraude',N(K.fraud)+' ('+K.fraudpct+'%)'],['Prejuízo em itens','US$ '+(K.loss/1e6).toFixed(2)+' mi']].map(x=>'<div><b>'+x[1]+'</b><span>'+x[0]+'</span></div>').join('');
+// 1 modal
+const m=D.sm['Shipping Mode'],ml=D.sm.late;
+el('t1').textContent='% de itens com prazo real acima do agendado';
+let o1=base(false);o1.scales.y.max=115;o1.scales.y.ticks.callback=v=>v<=100?v+'%':'';
+new Chart(el('c1'),{type:'bar',data:{labels:m,datasets:[{data:ml,fmt:v=>v+'%',backgroundColor:ml.map(v=>v>=90?R:v>=60?O:B),borderRadius:4,maxBarThickness:60}]},options:o1,plugins:[lab]});
+// 2 mercado
+const mk=D.mk,mi=a=>a.map(v=>+(v/1e6).toFixed(2));
+let o2=base(false);o2.plugins.legend={display:true,position:'bottom',labels:{boxWidth:10,color:mut}};
+new Chart(el('c2'),{type:'bar',data:{labels:mk.Market,datasets:[{label:'Vendas',data:mi(mk.sales),fmt:v=>v.toFixed(1),backgroundColor:B,borderRadius:3},{label:'Lucro',data:mi(mk.profit),fmt:v=>v.toFixed(1),backgroundColor:G,borderRadius:3}]},options:o2,plugins:[lab]});
+// 3 mensal
+const mo=D.mo;let o3=base(false);o3.scales.x.ticks={color:mut,maxTicksLimit:7};o3.scales.y.ticks.callback=v=>v.toFixed(1);o3.layout.padding.top=4;
+new Chart(el('c3'),{type:'line',data:{labels:mo.ym,datasets:[{data:mi(mo.sales),nolabel:true,borderColor:B,backgroundColor:B+'22',fill:true,pointRadius:0,borderWidth:2.5,tension:.3}]},options:o3});
+// 4 status
+const pk=Object.keys(D.perf).sort((a,b)=>D.perf[b]-D.perf[a]),tot=pk.reduce((s,k)=>s+D.perf[k],0);
+const pc={'Late delivery':R,'Advance shipping':G,'Shipping on time':B,'Shipping canceled':'#94a3b8'},pn={'Late delivery':'Atrasada','Advance shipping':'Antecipada','Shipping on time':'No prazo','Shipping canceled':'Cancelada'};
+let o4=base(true);o4.scales.x.display=false;o4.scales.x.max=75;
+new Chart(el('c4'),{type:'bar',data:{labels:pk.map(k=>pn[k]),datasets:[{data:pk.map(k=>+(D.perf[k]/tot*100).toFixed(1)),fmt:v=>v+'%',backgroundColor:pk.map(k=>pc[k]),borderRadius:4,maxBarThickness:34}]},options:o4,plugins:[lab]});
+// 5 categorias
+let o5=base(true);o5.scales.x.display=false;o5.scales.y.ticks.color=tx;
+new Chart(el('c5'),{type:'bar',data:{labels:D.cat['Category Name'],datasets:[{data:D.cat.loss.map(v=>Math.round(v/1000)),fmt:v=>N(v),backgroundColor:O,borderRadius:3,maxBarThickness:22}]},options:o5,plugins:[lab]});
+// 6 fraude
+let o6=base(true);o6.scales.x.display=false;o6.scales.y.ticks.color=tx;
+new Chart(el('c6'),{type:'bar',data:{labels:D.rg['Order Region'],datasets:[{data:D.rg.fraud,fmt:v=>N(v),backgroundColor:R,borderRadius:3,maxBarThickness:22}]},options:o6,plugins:[lab]});
+// insights
+const fc=m.indexOf('First Class'),bi=ml.indexOf(Math.min(...ml));
+el('ft').innerHTML=[
+'<div><b>Atraso:</b> '+m[fc]+' atrasa em '+ml[fc]+'% dos itens; '+m[bi]+' é o melhor modal ('+ml[bi]+'%). Rever SLA do First Class.</div>',
+'<div><b>Margem:</b> lucro de US$ '+(K.profit/1e6).toFixed(2)+' mi sobre US$ '+(K.sales/1e6).toFixed(1)+' mi vendidos ('+(K.profit/K.sales*100).toFixed(1)+'%). Prejuízo em itens equivale a '+(K.loss/K.profit*100).toFixed(0)+'% do lucro.</div>',
+'<div><b>Fraude:</b> '+N(K.fraud)+' itens suspeitos ('+K.fraudpct+'%); maior concentração em '+D.rg['Order Region'][0]+' ('+N(D.rg.fraud[0])+').</div>'].join('');
+</script></body></html>
